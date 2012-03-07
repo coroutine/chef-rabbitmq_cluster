@@ -1,6 +1,6 @@
 maintainer       "bradmontgomery"
 maintainer_email "bmontgomery@coroutine.com"
-license          "super-secret"
+license          "Apache 2.0"
 description      "Recipes to build an RabbitMQ Cluster"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.1.0"
