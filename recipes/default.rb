@@ -46,7 +46,13 @@ template "/etc/rabbitmq/rabbitmq.config" do
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, resources(:service => "rabbitmq-server")
+end
+
+template "/etc/rabbitmq/rabbitmq-env.config" do
+  source "rabbitmq-env.config.erb"
+  owner "root"
+  group "root"
+  mode 0644
 end
 
 # Blow away the mnesia database. This is necessary 
