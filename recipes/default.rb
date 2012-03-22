@@ -48,8 +48,8 @@ template "/etc/rabbitmq/rabbitmq.config" do
   mode 0644
 end
 
-template "/etc/rabbitmq/rabbitmq-env.config" do
-  source "rabbitmq-env.config.erb"
+template "/etc/rabbitmq/rabbitmq-env.conf" do
+  source "rabbitmq-env.conf.erb"
   owner "root"
   group "root"
   mode 0644
