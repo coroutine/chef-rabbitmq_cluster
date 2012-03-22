@@ -9,3 +9,7 @@ NODENAME=<% if node[:rabbitmq][:nodename] -%><%= node[:rabbitmq][:nodename] %><%
 <% if node[:rabbitmq][:logdir] -%>LOG_BASE=<%= node[:rabbitmq][:logdir] %><% end %>
 <% if node[:rabbitmq][:mnesiadir] -%>MNESIA_BASE=<%= node[:rabbitmq][:mnesiadir] %><% end %>
 
+# Supposedly, you can include the erlang cookie when starting the service...
+# this didn't work, though.
+#SERVER_START_ARGS="-setcookie <%= node[:rabbitmq][:erlang_cookie] %>"
+#MULTI_ERL_ARGS=

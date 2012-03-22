@@ -34,13 +34,6 @@ service "rabbitmq-server" do
   only_if 'service rabbitmq-server status'
 end
 
-template "/var/lib/rabbitmq/.erlang.cookie" do
-  source "rabbitmq_doterlang.cookie.erb"
-  owner "rabbitmq"
-  group "rabbitmq"
-  mode 0600
-end
-
 template "/etc/rabbitmq/rabbitmq.config" do
   source "rabbitmq.config.erb"
   owner "root"
@@ -55,19 +48,28 @@ template "/etc/rabbitmq/rabbitmq-env.conf" do
   mode 0644
 end
 
-# Blow away the mnesia database. This is necessary 
-# so the nodes in the cluster will be able to 
-# recognize each other (this should only happen once)
+# Blow away the mnesia database and any automatically created
+# .erlang.cookie file. This is necessary so the nodes in the 
+# cluster will be able to recognize each other (this should 
+# only happen once... the first time we install RabbitMQ)
 bash "Reset mnesia" do
   user "root"
   cwd "/var/lib/rabbitmq"
   code <<-EOH
     rm -rf mnesia/
     touch .reset_mnesia_database
+    if [ -a ".erlang.cookie" ]; then rm .erlang.cookie; fi
   EOH
   not_if do
     File.exists?("/var/lib/rabbitmq/.reset_mnesia_database")
   end
+end
+
+template "/var/lib/rabbitmq/.erlang.cookie" do
+  source "rabbitmq_doterlang.cookie.erb"
+  owner "rabbitmq"
+  group "rabbitmq"
+  mode 0400
 end
 
 # Restart the server. 
