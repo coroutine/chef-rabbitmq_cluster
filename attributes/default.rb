@@ -23,3 +23,8 @@
 # the `rabbitmq` data bag
 
 default[:rabbitmq_setup_items] = []
+
+# Specify the ports used for Erlang distributed node protocol.
+# See: http://www.rabbitmq.com/clustering.html#firewall
+default[:rabbitmq][:inet_dist_listen_min] = nil
+default[:rabbitmq][:inet_dist_listen_max] = nil

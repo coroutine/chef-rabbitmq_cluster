@@ -13,3 +13,9 @@ NODENAME=<% if node[:rabbitmq][:nodename] -%><%= node[:rabbitmq][:nodename] %><%
 # this didn't work, though.
 #SERVER_START_ARGS="-setcookie <%= node[:rabbitmq][:erlang_cookie] %>"
 #MULTI_ERL_ARGS=
+
+<% if node[:rabbitmq][:inet_dist_listen_min] && node[:rabbitmq][:inet_dist_listen_max] %>
+# Set the min/max ports used for Erlang distributed node protocol.
+# See http://www.rabbitmq.com/clustering.html#firewall
+SERVER_ERL_ARGS="$SERVER_ERL_ARGS -kernel inet_dist_listen_min <%= node[:rabbitmq][:inet_dist_listen_min] -%> -kernel inet_dist_listen_max <%= node[:rabbitmq][:inet_dist_listen_max] -%>"
+<% end %>
